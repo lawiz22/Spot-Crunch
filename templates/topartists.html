@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pageheader-content row">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+
+                {% for result in result_list.items %}
+                    {% if result.images.1.url != NULL %}
+
+                        <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                                
+                            <div class="entry__thumb">
+                                <a href="{% url 'artist' result.id %}" class="entry__thumb-link">
+                                    <img src="{{ result.images.1.url }}" >
+                                </a>
+                            </div>
+            
+                            <div class="entry__text">
+                                <div class="entry__header">
+                                    
+                                    <div class="entry__date">
+                                        <a href="{% url 'artist' result.id %}">Popularity {{ result.popularity }}</a>
+                                    </div>
+                                    <h1 class="entry__title"><a href="{% url 'artist' result.id %}">{{ result.name }}</a></h1>
+                                    
+                                </div>
+                                <div class="entry__excerpt">
+                                    <p>
+                                    {{ result.description }}
+                                    </p>
+                                </div>
+                            </div>
+            
+                        </article> <!-- end article -->
+
+                     {% endif %}
+                {% endfor %}
+                
+                
+
+                
+
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+</div>
+   
+
+
+{% endblock %}

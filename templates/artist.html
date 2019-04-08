@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="pageheader-content row">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+
+                {% for album in artist.items %}
+                    
+
+                        <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                                
+                            <div class="entry__thumb">
+                                <a href="{% url 'album' album.id %}" class="entry__thumb-link">
+                                    <img src="{{ album.images.1.url }}" >
+                                </a>
+                            </div>
+            
+                            <div class="entry__text">
+                                <div class="entry__excerpt">
+                      
+                                   <center> <p <a href="{% url 'album' album.id %}">{{ album.name }}</a> </p></center> 
+                                    
+                                </div>
+        
+                            </div>
+            
+                        </article> <!-- end article -->
+
+                     
+                {% endfor %}
+                
+                
+
+                
+
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+</div>   
+{% endblock %}

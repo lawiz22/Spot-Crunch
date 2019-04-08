@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="pageheader-content row">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+
+                {% for release in new_releases %}
+                    
+
+                        <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+
+                            
+                            <div class="entry__thumb">
+                                <a href="{% url 'album' release.id %}" class="entry__thumb-link">
+                                    <img src="{{ release.images.1.url }}" >
+                                </a>
+                            </div>
+            
+                            <div class="entry__text">
+                                <div class="entry__excerpt">
+                                    <center> <h4><a href="#0" title="">{{ release.artists.0.name }}</a></h4></center> 
+
+                                   <center> <p <a href="{% url 'album' release.id %}">{{ release.name }}</a> </p></center> 
+                                    
+                                </div>
+        
+                            </div>
+            
+                        </article> <!-- end article -->
+
+                     
+                {% endfor %}
+                
+                
+
+                
+
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+</div>   
+
+{% endblock %}

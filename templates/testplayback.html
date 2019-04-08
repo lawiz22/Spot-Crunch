@@ -1,0 +1,72 @@
+<script>
+window.onSpotifyWebPlaybackSDKReady = () => {
+      const token = 'BQBL8wS7DG7VSyIC2ec3wZNA3jhy0KJakWsKMxhGO5Hx1i-r26hAsR64NxLteWQvDCARDTE1XEXm_oTfuZ-o77j636xEK7QrMIdu_hevnyyitLex0syKZ1cZ8g081NN3bsgxqBtlXR85mnx4E2SQPG1sGMNEKgD97_4aJFAPAfG6QBeqd0ScxULv';
+      const player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+      });
+
+      // Error handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+      // Playback status updates
+      player.addListener('player_state_changed', state => { console.log(state); });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+    };
+    const play = ({
+  spotify_uri,
+  playerInstance: {
+    _options: {
+      getOAuthToken,
+      id
+    }
+  }
+}) => {
+  getOAuthToken(access_token => {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ uris: [spotify_uri] }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      },
+    });
+  });
+};
+
+play({
+  playerInstance: new Spotify.Player({ name: "..." }),
+  spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
+});
+</script>
+
+
+{% if  recently.track.id == recently.track.id|index:forloop.counter0 %}
+
+            <a href="{% url 'track' track_id=recently.track.id track_artist=recently.track.artists.0.name track_name=recently.track.name %}" class="list-group-item list-group-item-action">
+                <img src="{{ recently.track.album.images.1.url }}" width="40"  height="40" style="float: left; margin-top: -10px">
+                &ensp; {{ recently.track.artists.0.name }} - &ensp; {{ recently.track.name }}
+                    {% if  dict_like_track.track_like|index:forloop.counter0 == '[false]' %}
+                        <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40" style="float: right; margin-top: -10px">
+                    {% else %}                   
+                         <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" style="float: right; margin-top: -10px">
+                    {% endif %}
+            </a>
+            
+            <br>
+        {% endif %}

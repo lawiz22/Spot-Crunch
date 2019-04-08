@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+<div class="pageheader-content row">
+        
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' sixties.id %}" class="entry__thumb-link">
+                            <img src="{{ sixties.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' sixties.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' sixties.id %}">{{ sixties.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ sixties.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' seventies.id %}" class="entry__thumb-link">
+                            <img src="{{ seventies.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' seventies.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' seventies.id %}">{{ seventies.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ seventies.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+
+
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' eighties.id %}" class="entry__thumb-link">
+                            <img src="{{ eighties.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' eighties.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' eighties.id %}">{{ eighties.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ eighties.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' nineties.id %}" class="entry__thumb-link">
+                            <img src="{{ nineties.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' nineties.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' nineties.id %}">{{ nineties.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ nineties.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' twentyzero.id %}" class="entry__thumb-link">
+                            <img src="{{ twentyzero.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' twentyzero.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' twentyzero.id %}">{{ twentyzero.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ twentyzero.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{% url 'playlist' twentyten.id %}" class="entry__thumb-link">
+                            <img src="{{ twentyten.images.0.url }}" >
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{% url 'playlist' twentyten.id %}">Avril 8, 2019</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{% url 'playlist' twentyten.id %}">{{ twentyten.name }}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                               {{ twentyten.description }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Playlist</a> 
+                                <a href="category.html">Spotify</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+                
+
+                
+
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+</div>      
+
+    
+
+    
+{% endblock %}

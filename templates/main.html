@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('{{ user_profile.images.0.url }}');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">Musique</a></span>
+
+                                <h1><a href="#0" title="">{{ user_profile.display_name }}</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">ID Spotify</a></li>
+                                        <li>{{ user_profile.id }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        <div class="entry" style="background-image:url('{% static "images/featured-guitarman.jpg" %}');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">VOS CHANSONS DANS LA BD</a></span>
+
+                                <h1><a href="#0" title=""> Nombre total tracks BD : {{ nb_de_tounne }}</a>  </h1>
+                                <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="50"  height="50" > : {{ tracks_oui }}</a></h1>
+                                <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="50"  height="50" > : {{ tracks_non }}</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">ID Spotify</a></li>
+                                        <li>{{ user_profile.id }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                          
+                        </div> <!-- end entry -->
+
+                        <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
+
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">VOS ALBUMS DANS LA BD</a></span>
+                               
+                                        <h1><a href="#0" title=""> Nombre total albums BD : {{ nb_de_album }}</a>  </h1>
+                                        <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="50"  height="50" > : {{ albums_oui }}</a></h1>
+                                        <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="50"  height="50" > : {{ albums_non }}</a></h1>
+    
+                                
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">ID Spotify</a></li>
+                                        <li>{{ user_profile.id }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+
+                        </div> <!-- end entry -->
+
+                    </div> <!-- end featured__small -->
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+ </section> <!-- end s-extra -->      
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load dict_key %}
+{% load index %}
+{{ List|index:x }}
+
+{% block content %}
+    <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="col-full">
+
+                    {{ dict_like_track.total }}
+
+                    <!-- commentlist -->
+
+                    {% for track in playlist_tracks.items %}
+
+                        <ol class="commentlist" style="border-bottom: 4px solid white; padding: 8px;">
+
+                            <li class="depth-1 comment">
+
+                                <div class="comment__avatar">
+                                    <img width="50" height="50" class="avatar" src="{{ track.track.album.images.1.url }}" alt="">
+                                </div>
+
+                                <div class="comment__content">
+
+                                    <div class="comment__info">
+                                        <cite>{{ track.track.artists.0.name }} - &ensp; {{ track.track.name }}</cite>
+
+                                        {% if  dict_like_track.track_like|index:forloop.counter0 == '[false]' %}
+                                            <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40" style="float: right; ">
+                                        {% else %}                   
+                                            <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" style="float: right;  ">
+                                        {% endif %}
+
+                                        <div class="comment__meta">
+                                            <time class="comment__time">{{ track.track.album.name }}</time>
+                                            <a class="reply" href="{% url 'track' track_id=track.track.id track_artist=track.track.artists.0.name track_name=track.track.name %}">Details</a>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                </div>
+                        
+                            </li> <!-- end comment level 1 -->
+
+                            
+
+                        </ol> <!-- end commentlist -->
+
+
+                    {% endfor %}
+
+                </div> <!-- end col-full -->
+
+            </div> <!-- end row comments -->
+        </div> <!-- end comments-wrap -->
+{% endblock %}

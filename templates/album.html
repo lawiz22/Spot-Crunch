@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load dict_key %}
+{% load index %}
+{{ List|index:x }}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/bar.css' %}">
+<link rel="stylesheet" href="{% static 'css/table-style.css' %}">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    <script src="{% static 'js/graph.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
+                            <img src="{{ album.images.1.url }}" style="float: left; margin-left: 60px" width="280"  height="280">
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">ALBUM</a></span>
+                                
+                                <h1><a href="#0" title="">{{ album.name }} - {{ album.artists.0.name }}</a></h1>
+                                    
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                      <img class="avatar" src="{% static "images/spotify-transparent-wiki-6.png" %}" style="margin-top: 10px" alt="">      
+                                    </a>
+                                    <ul class="entry__meta">
+                                        <li><a href="">ID Spotify</a></li>
+                                        <li>{{ album.id }}</li>
+                                        <br>
+                                        <li><a href="">UPC</a></li>
+                                        <li>{{ album.external_ids.upc }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+                    <div class="entry" style="">
+                            
+                            <div class="entry__content">
+                               
+                            </div> <!-- end entry__content -->
+                          
+                        </div> <!-- end entry -->
+                        <center>
+                            <iframe src="https://open.spotify.com/embed/album/{{ album.id }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            <p> Inscrit dans la BD de {{ user_name }}</p>
+                        </center>
+                        <center>
+                            {% if like == '[false]' %}  
+                                <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40"  >
+                            {% else %}
+                                <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" >
+                            {% endif %}  
+                        </center>
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full --> 
+        </div> <!-- end pageheader-content row -->
+        
+        
+        
+        <center><div class="row half-bottom">
+            <div class="col-twelve">
+                    <img src="{% static "images/feature.png" %}"width="300" height="54" >
+                <ul class="stats-tabs">
+                    <li><a href="#">{{ spot_album.danceability }} <em>Danceability</em></a></li>
+                    <li><a href="#">{{ spot_album.speechiness }} <em>Speechiness</em></a></li>
+                    <li><a href="#">{{ spot_album.acousticness }} <em>Acousticness</em></a></li>
+                    <li><a href="#">{{ spot_album.valence }} <em>Valence</em></a></li>
+                    <li><a href="#">{{ spot_album.instrumentalness }} <em>Instrumentalness</em></a></li>
+                    <li><a href="#">{{ spot_album.energy }} <em>Energy</em></a></li>
+                </ul>
+            </div>
+
+        </div> <!-- end row --></center>
+<!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="col-full">
+
+                    {{ dict_like_track.total }}
+
+                    <!-- commentlist -->
+
+                    {% for track in tracks %}
+
+                        <ol class="commentlist" style="border-bottom: 4px solid white; padding: 8px;">
+
+                            <li class="depth-1 comment">
+
+                                <div class="comment__avatar">
+                                    <img width="50" height="50" class="avatar" src="{{ album.images.1.url }}" alt="">
+                                </div>
+
+                                <div class="comment__content">
+
+                                    <div class="comment__info">
+                                        <cite>{{ track.track_number }}. {{ track.name }}</cite>
+
+
+                                        <div class="comment__meta">
+                                            <time class="comment__time">{{ dict_isrc_track.track_isrc|index:forloop.counter0 }}</time>
+                                            <a class="reply" href="{% url 'track' track_id=track.id track_artist=album.artists.0.name track_name=track.name %}">Details</a>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                </div>
+                        
+                            </li> <!-- end comment level 1 -->
+
+                            
+
+                        </ol> <!-- end commentlist -->
+
+
+                    {% endfor %}
+
+                </div> <!-- end col-full -->
+
+            </div> <!-- end row comments -->
+        </div> <!-- end comments-wrap -->
+<div class="chart" style="width: 50%; margin: auto">
+        <h3 style="font-weight: bolder">Chart - album features</h3>
+          <table id="data-table" border="1" cellpadding="20" cellspacing="50">
+            <thead>
+              <tr>
+                 <td>&nbsp;</td>
+                 <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for item in album_avg %}
+              <tr>
+                 <th scope="row"></th>
+                 <td>{{ item }}</td>
+                <td></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+</div>
+
+
+
+{% endblock %}

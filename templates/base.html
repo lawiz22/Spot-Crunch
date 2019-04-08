@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Spotify CRUNCH v1.1{% endblock %}</title>
+    
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    <link rel="stylesheet" href="{% static "css/vendor.css" %}">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+
+    <!-- script
+    ================================================== -->
+    <script src="{% static "js/modernizr.js" %}"></script>
+    <script src="{% static "js/pace.min.js" %}"></script>
+	
+    
+
+    {% block head %}{% endblock %}
+</head>
+
+
+<body id="top">
+<!-- pageheader
+    ================================================== -->
+<section class="s-pageheader s-pageheader--home">
+  <header class="header">
+    <div class="header__content row">
+               
+                <div class="header__logo" >
+                    <a class="logo" href="{% url 'index' %}">
+                         <img  src="{% static "images/logo2.png" %}" alt="Homepage"> 
+                    </a> 
+                </div> 
+
+               <ul class="header__social">
+                    <li>
+                        <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
+
+                </ul> <!-- end header__social -->
+
+                <a class="header__search-trigger" href="#0"></a>
+
+                <div class="header__search">
+
+                    <form role="search" method="get" class="header__search-form" action="{% url 'search' %}" id="searchform">
+                        <label>
+                            <span class="hide-content">Search for:</span>
+                            <input type="search" class="search-field" placeholder="Ecrire un artiste" name="q" type="text" value="{{ request.GET.q }}" title="Recherche" autocomplete="on">
+                        </label>
+                        <input type="submit" class="search-submit" value="Search">
+                    </form>
+        
+                    <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+                </div>  <!-- end header__search -->
+
+
+                <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+                <nav class="header__nav-wrap">
+
+                    <h2 class="header__nav-heading h6">Site Navigation</h2>
+
+                    <ul class="header__nav">
+                        <li class="current"><a href="{% url 'index' %}" title="">Accueil</a></li>
+                        <li class="has-children">
+                            <a href="#0" title="">TOPS</a>
+                            <ul class="sub-menu">
+                            <li><a href="{% url 'topartists' %}">Artists</a></li>
+                            <li><a href="{% url 'topartists' %}">Chansons</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#0" title="">Playlists</a>
+                            <ul class="sub-menu">
+                            <li><a href="{% url 'spotify_playlists' %}">Par décennies</a></li>
+                            <li><a href="{% url 'new_release' %}">Nouveau sur spotify</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li><a href="{% url 'recently_played' %}">Récemment joué</a></li>
+                        <li><a href="{% url 'kes_jecoute' %}" title="">Ce que tu écoute en ce moment</a></li>
+                        <li><a href="{% url 'tracks_table' %}" title="">BD TRACKS</a></li>
+                        <li><a href="{% url 'albums_table' %}" title="">BD ALBUMS</a></li>
+                    </ul> <!-- end header__nav -->
+                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+                </nav> <!-- end header__nav-wrap -->
+      </div> <!-- header-content -->
+    </header> <!-- header -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "js/plugins.js" %}"></script>
+    <script src="{% static "js/main.js" %}"></script>
+
+</section> <!-- s-content -->
+<!--===============================================================================================-->
+</body>
+</html>

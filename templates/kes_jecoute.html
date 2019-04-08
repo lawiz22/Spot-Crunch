@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+
+
+{% block content %}
+<div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
+                            <img src="{{ currently_played.album.images.1.url }}" style="float: left; margin-left: 60px" width="280"  height="280">
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">Ajoutez a ma BD</a></span>
+                                {% if like_track == '[false]' %}  
+                                    <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40" style="float: right" >
+                                {% else %}
+                                    <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" style="float: right">
+                                {% endif %}  
+                                <h1><a href="#0" title="">{{ currently_played.album.artists.0.name }} - {{ currently_played.name }}</a></h1>
+                                    
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                      <img class="avatar" src="{% static "images/spotify-transparent-wiki-6.png" %}" style="margin-top: 10px" alt="">      
+                                    </a>
+                                    <ul class="entry__meta">
+                                        <li><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">ID Spotify</a></li>
+                                        <li>{{ currently_played.id }}</li>
+                                        <br>
+                                        <li><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">ISRC</a></li>
+                                        <li>{{ track_isrc }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        <div class="entry" style="background-image:url('{{ currently_played.album.images.1.url }}');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="{% url 'album' currently_played.album.id %}">VOIR L'ALBUM</a></span>
+                                {% if like == '[false]' %}  
+                                    <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40" style="float: right" >
+                                {% else %}
+                                    <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" style="float: right">
+                                {% endif %}
+                                <h1><a href="#0" title="">{{ currently_played.album.artists.0.name }}</a>  </h1>
+                                <h1><a href="#0" title="">{{ currently_played.album.name }}</a>  </h1>
+                
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="{% static "images/spotify-transparent-wiki-6.png" %}" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="{% url 'album' currently_played.album.id %}">ID Spotify</a></li>
+                                        <li>{{ currently_played.album.id }}</li>
+                                        <br>
+                                        <li><a href="{% url 'album' currently_played.album.id %}">UPC</a></li>
+                                        <li>{{ album_upc}}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                          
+                        </div> <!-- end entry -->
+
+                        <div class="entry" style="background-image:url('{{ artist.images.0.url }}');">
+
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="{% url 'artist' artist.id %}">VOIR LES ALBUMS</a></span>
+
+                                <h1><a href="#0" title="">{{ artist.name }}</a>  </h1>
+                                
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="{% url 'artist' artist.id %}">ID Spotify</a></li>
+                                        <li>{{ artist.id }}</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+
+                        </div> <!-- end entry -->
+
+                    </div> <!-- end featured__small -->
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+
+{% endblock %}
