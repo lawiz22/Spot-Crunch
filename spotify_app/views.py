@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views import View
 from .user_data_context import *
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 import requests
 import json
 from .models import Track, Album
@@ -181,7 +182,7 @@ class AlbumView(View):
         like = json.dumps(tracks4)
 
         if Album.objects.filter(album_id=album_id,user_id=user_profile['id']).exists():
-            spot_album = Album.objects.filter(album_id=album_id).update(like_it=like)
+            spot_album = Album.objects.filter(album_id=album_id,user_id=user_profile['id']).update(like_it=like)
             spot_album = Album.objects.get(album_id=album_id,user_id=user_profile['id'])
         else:
             try:
@@ -320,13 +321,14 @@ class TrackAudioFeaturesView(View):
         like_track = json.dumps(track3)
         
         if Track.objects.filter(track_id=track_id,user_id=user_profile['id']).exists():
-            spot_track = Track.objects.filter(track_id=track_id).update(like_it=like_track)
-            spot_track = Track.objects.filter(track_id=track_id).update(mode=float(format(track['mode'], '.3f')))
-            spot_track = Track.objects.filter(track_id=track_id).update(time_signature=float(format(track['time_signature'], '.3f')))
-            spot_track = Track.objects.filter(track_id=track_id).update(duration_ms=float(format(track['duration_ms'], '.3f')))
-            spot_track = Track.objects.filter(track_id=track_id).update(tempo=float(format(track['tempo'], '.3f')))
-            spot_track = Track.objects.filter(track_id=track_id).update(loudness=float(format(track['loudness'], '.3f')))
-            spot_track = Track.objects.get(track_id=track_id)
+            
+            try:
+                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track)
+                
+                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id'])
+            except (ObjectDoesNotExist, MultipleObjectsReturned):
+                pass
+            
         else:
             spot_track = Track.objects.create(track_id=track_id,
                                               track_artist=track_artist,
