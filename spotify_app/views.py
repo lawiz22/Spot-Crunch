@@ -281,6 +281,37 @@ class SpotifyPlaylistsView(View):
         }
         return render(request, 'spotify_playlists.html', ctx)
 
+class ProjetPlaylistsView(View):
+
+
+    def get(self, request):
+        if 'access_token' not in request.session:
+            return redirect('callback')
+        access_token = request.session.get('access_token')
+        authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+
+        # playlist from different decades
+        sixties = get_spotify_playlist(authorization_header, '4nafyLlYBlYdlAfiev1FMi')
+        seventies = get_spotify_playlist(authorization_header, '6SDncPPOK5Irhm0frDZ6TO')
+        eighties = get_spotify_playlist(authorization_header, '0snqPZNulJzDRfSTeHLykL')
+        nineties = get_spotify_playlist(authorization_header, '37i9dQZEVXcSJLvSHFBWrr')
+        twentyzero = get_spotify_playlist(authorization_header, '37i9dQZF1Ejd2YJlaE7jGk')
+        twentyten = get_spotify_playlist(authorization_header, '37i9dQZF1DWTZeTXqKTge4')
+        diver1 = get_spotify_playlist(authorization_header, '37i9dQZF1Ejd2YJlaE7jGk')
+        diver2 = get_spotify_playlist(authorization_header, '37i9dQZF1DWTZeTXqKTge4')
+        
+        ctx = {
+            'sixties': sixties,
+            'seventies': seventies,
+            'eighties': eighties,
+            'nineties': nineties,
+            'twentyzero': twentyzero,
+            'twentyten': twentyten,
+            'diver1': diver1,
+            'diver2': diver2
+
+        }
+        return render(request, 'projet_playlists.html', ctx)
 
 class PlaylistView(View):
 

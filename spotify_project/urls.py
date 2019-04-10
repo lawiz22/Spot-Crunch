@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^recently_played/$', UserRecentlyPlayedView.as_view(), name='recently_played'),
     url(r'^album/(?P<album_id>[a-zA-Z0-9]+)', AlbumView.as_view(), name='album'),
     url(r'^spotify_playlists/$', SpotifyPlaylistsView.as_view(), name='spotify_playlists'),
+    url(r'^projet_playlists/$', ProjetPlaylistsView.as_view(), name='projet_playlists'),
     url(r'^playlist/(?P<playlist_id>[a-zA-Z0-9]+)/', PlaylistView.as_view(), name='playlist'),
     url(r'^track/(?P<track_id>[a-zA-Z0-9]+)/(?P<track_artist>.*)/(?P<track_name>.*)/',
         TrackAudioFeaturesView.as_view(), name='track'),
