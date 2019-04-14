@@ -94,9 +94,9 @@
                         </li>
                         
                         <li><a href="{% url 'recently_played' %}">Récemment joué</a></li>
-                        <li><a href="{% url 'kes_jecoute' %}" title="">Ce que tu écoute en ce moment</a></li>
+                        <li><a href="{% url 'kes_jecoute' %}" title="">Ecoute maintenant</a></li>
                         <li><a href="{% url 'tracks_table' %}" title="">BD TRACKS</a></li>
-                        <li><a href="{% url 'albums_table' %}" title="">BD ALBUMS</a></li>
+                        <li><a href="{% url 'albums_table' %}" target="_blank" title="">BD ALBUMS</a></li>
                     </ul> <!-- end header__nav -->
                     <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
                 </nav> <!-- end header__nav-wrap -->
@@ -124,6 +124,8 @@
     <!-- Java Script
     ================================================== -->
     <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
     <script src="{% static "js/plugins.js" %}"></script>
     <script src="{% static "js/main.js" %}"></script>
 

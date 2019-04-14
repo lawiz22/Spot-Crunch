@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import JsonResponse
 from django.views import View
 from .user_data_context import *
@@ -340,7 +341,7 @@ class PlaylistView(View):
 
 class TrackAudioFeaturesView(View):
 
-    def get(self, request, track_id, track_artist, track_name):
+    def get(self, request, track_id):
         if 'access_token' not in request.session:
             return redirect('callback')
         access_token = request.session.get('access_token')
@@ -350,7 +351,10 @@ class TrackAudioFeaturesView(View):
         track3 = get_save_track(authorization_header, track_id)
         user_profile = get_users_profile(authorization_header)
         like_track = json.dumps(track3)
-        
+        track_NEW_name = track2['name'].replace("'", "")
+        track_name = track2['name']
+        track_artist = track2['album']['artists'][0]['name']
+        print(track_artist)
         if Track.objects.filter(track_id=track_id,user_id=user_profile['id']).exists():
             
             try:
@@ -403,7 +407,7 @@ class TrackAudioFeaturesView(View):
             'image_album' : track2['album']['images'],
             'like_track': like_track
                    }
-        print(ctx)
+        
         return render(request, 'track.html', ctx)
 
 

@@ -112,7 +112,7 @@
 
                                         <div class="comment__meta">
                                             <time class="comment__time">{{ dict_isrc_track.track_isrc|index:forloop.counter0 }}</time>
-                                            <a class="reply" href="{% url 'track' track_id=track.id track_artist=album.artists.0.name track_name=track.name %}">Details</a>
+                                            <a class="reply" href="{% url 'track' track_id=track.id %}">Details</a>
                                         </div>
                                     </div>
 

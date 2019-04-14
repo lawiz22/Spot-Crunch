@@ -438,43 +438,7 @@ img.pull-left {
 }
 
 
-/* ------------------------------------------------------------------- 
- * ## tables
- * ------------------------------------------------------------------- */
-table {
-   border-width: 0;
-   width: 100%;
-   max-width: 100%;
-   font-family: "metropolis-regular", sans-serif;
-}
 
-th, td {
-   padding: 1.5rem 3rem;
-   text-align: left;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-th {
-   color: #000000;
-   font-family: "metropolis-bold", sans-serif;
-}
-
-td {
-   line-height: 1.5;
-}
-
-th:first-child, td:first-child {
-   padding-left: 0;
-}
-
-th:last-child, td:last-child {
-   padding-right: 0;
-}
-
-.table-responsive {
-   overflow-x: auto;
-   -webkit-overflow-scrolling: touch;
-}
 
 
 /* ------------------------------------------------------------------- 
