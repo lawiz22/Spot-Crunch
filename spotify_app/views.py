@@ -357,34 +357,54 @@ class TrackAudioFeaturesView(View):
         print(track_artist)
         if Track.objects.filter(track_id=track_id,user_id=user_profile['id']).exists():
             
-            try:
                 spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track)
-                
-                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id'])
-            except (ObjectDoesNotExist, MultipleObjectsReturned):
-                pass
-            
+                spot_track = Track.objects.get(track_id=track_id,user_id=user_profile['id']) 
         else:
-            spot_track = Track.objects.create(track_id=track_id,
-                                              track_artist=track_artist,
-                                              track_name=track_name,
-                                              user_id=user_profile['id'],
-                                              user_name=user_profile['display_name'],
-                                              isrc=track2['external_ids']['isrc'],
-                                              mode=float(format(track['mode'], '.3f')),
-                                              time_signature=float(format(track['time_signature'], '.3f')),
-                                              duration_ms=float(format(track['duration_ms'], '.3f')),
-                                              tempo=float(format(track['tempo'], '.3f')),
-                                              loudness=float(format(track['loudness'], '.3f')),
-                                              danceability=float(format(track['danceability'], '.3f')),
-                                              speechiness=float(format(track['speechiness'], '.3f')),
-                                              acousticness=float(format(track['acousticness'], '.3f')),
-                                              valence=float(format(track['valence'], '.3f')),
-                                              instrumentalness=float(format(track['instrumentalness'], '.3f')),
-                                              energy=float(format(track['energy'], '.3f')),
-                                              liveness=float(format(track['liveness'], '.3f')),
-                                              key=track['key'],
-                                              like_it=like_track)
+            try:
+                spot_track = Track.objects.create(track_id=track_id,
+                                                track_artist=track_artist,
+                                                track_name=track_name,
+                                                user_id=user_profile['id'],
+                                                user_name=user_profile['display_name'],
+                                                isrc=track2['external_ids']['isrc'],
+                                                mode=float(format(track['mode'], '.3f')),
+                                                time_signature=float(format(track['time_signature'], '.3f')),
+                                                duration_ms=float(format(track['duration_ms'], '.3f')),
+                                                tempo=float(format(track['tempo'], '.3f')),
+                                                loudness=float(format(track['loudness'], '.3f')),
+                                                danceability=float(format(track['danceability'], '.3f')),
+                                                speechiness=float(format(track['speechiness'], '.3f')),
+                                                acousticness=float(format(track['acousticness'], '.3f')),
+                                                valence=float(format(track['valence'], '.3f')),
+                                                instrumentalness=float(format(track['instrumentalness'], '.3f')),
+                                                energy=float(format(track['energy'], '.3f')),
+                                                liveness=float(format(track['liveness'], '.3f')),
+                                                key=track['key'],
+                                                like_it=like_track)
+            except KeyError:
+                table_track = [
+                        int(track['danceability'] * 100),
+                        int(track['speechiness'] * 100),
+                        int(track['acousticness'] * 100),
+                        int(track['valence'] * 100),
+                        int(track['instrumentalness'] * 100),
+                        int(track['energy'] * 100),
+                        int(track['liveness'] * 100),
+                        int(track['key'])
+            
+                             ]
+                ctx = {
+                        'track': track,
+                        'user_name': user_profile['display_name'],
+                        'spot_track': spot_track,
+                        'table_track': table_track,
+                        'track_artist': track_artist,
+                        'track_name': track_name,
+                        'isrc' : track2['external_ids']['isrc'],
+                        'image_album' : track2['album']['images'],
+                        'like_track': like_track
+                    }
+            return render(request, 'track.html', ctx)
         table_track = [
             int(track['danceability'] * 100),
             int(track['speechiness'] * 100),
