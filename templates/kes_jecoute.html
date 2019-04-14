@@ -13,7 +13,7 @@
                         <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
                             <img src="{{ currently_played.album.images.1.url }}" style="float: left; margin-left: 60px" width="280"  height="280">
                             <div class="entry__content">
-                                <span class="entry__category"><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">Ajoutez a ma BD</a></span>
+                                <span class="entry__category"><a href="{% url 'track' track_id=currently_played.id %}">Ajoutez a ma BD</a></span>
                                 {% if like_track == '[false]' %}  
                                     <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40" style="float: right" >
                                 {% else %}
@@ -26,10 +26,10 @@
                                       <img class="avatar" src="{% static "images/spotify-transparent-wiki-6.png" %}" style="margin-top: 10px" alt="">      
                                     </a>
                                     <ul class="entry__meta">
-                                        <li><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">ID Spotify</a></li>
+                                        <li><a href="{% url 'track' track_id=currently_played.id %}">ID Spotify</a></li>
                                         <li>{{ currently_played.id }}</li>
                                         <br>
-                                        <li><a href="{% url 'track' track_id=currently_played.id track_artist=currently_played.artists.0.name track_name=currently_played.name %}">ISRC</a></li>
+                                        <li><a href="{% url 'track' track_id=currently_played.id %}">ISRC</a></li>
                                         <li>{{ track_isrc }}</li>
                                     </ul>
                                 </div>

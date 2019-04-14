@@ -39,7 +39,7 @@
 
                                         <div class="comment__meta">
                                             <time class="comment__time">{{ recently.track.album.name }}</time>
-                                            <a class="reply" href="{% url 'track' track_id=recently.track.id track_artist=recently.track.artists.0.name track_name=recently.track.name %}">Details</a>
+                                            <a class="reply" href="{% url 'track' track_id=recently.track.id %}">Details</a>
                                         </div>
                                     </div>
 

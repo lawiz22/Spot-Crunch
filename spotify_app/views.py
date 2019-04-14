@@ -351,7 +351,7 @@ class TrackAudioFeaturesView(View):
         track3 = get_save_track(authorization_header, track_id)
         user_profile = get_users_profile(authorization_header)
         like_track = json.dumps(track3)
-        track_NEW_name = track2['name'].replace("'", "")
+       
         track_name = track2['name']
         track_artist = track2['album']['artists'][0]['name']
         print(track_artist)
