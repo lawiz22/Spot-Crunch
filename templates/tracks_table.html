@@ -161,7 +161,12 @@
             <td scope="row" href=>{{ track.id }}</td>
             <td><a href="{% url 'track' track_id=track.track_id %}">{{ track }} </a> </td>
             <td>{{ track.user_name }}</td>
-            <td>{{ track.like_it }}</td>
+            <td>
+			{% if  track.like_it == '[false]' %}
+                     NON <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="30"  height="30" style="float: right; ">
+            {% else %}                   
+                     OUI <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="30"  height="30" style="float: right;  ">
+            {% endif %}</td>
             <td>{{ track.danceability }}</td>
             <td>{{ track.speechiness }}</td>
             <td>{{ track.acousticness }}</td>

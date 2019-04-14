@@ -404,7 +404,7 @@ class TrackAudioFeaturesView(View):
                         'image_album' : track2['album']['images'],
                         'like_track': like_track
                     }
-            return render(request, 'track.html', ctx)
+                return render(request, 'track.html', ctx)
         table_track = [
             int(track['danceability'] * 100),
             int(track['speechiness'] * 100),
