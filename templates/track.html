@@ -4,6 +4,10 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/bar.css' %}">
 <link rel="stylesheet" href="{% static 'css/table-style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/Chart.css' %}">
+<script src="{% static "js/Chart.bundle.js" %}"></script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
     <script src="{% static 'js/graph.js' %}"></script>
@@ -55,13 +59,22 @@
                             <iframe src="https://open.spotify.com/embed/track/{{ track.id }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                             <p> Inscrit dans la BD de {{ user_name }}</p>
                         </center>
-                        <center>
+                        <center style="background-color:dark-grey;">
                             {% if like_track == '[false]' %}  
                                 <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40"  >
                             {% else %}
                                 <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" >
-                            {% endif %}  
+                            {% endif %}
+                            <a href="#stattounne"><img src="{% static "images/baobab-stats-icon.png" %}" width="40"  height="40"  >
+                            <p style="background-color:grey;" style="font-style:bold;"style="color:RGB(255, 255, 255)" id= "key_name" > </p>  
+                            {% if mode == 1 %}  
+                                <p style="background-color:grey;" style="font-style:bold;" style="color:RGB(255, 255, 255)"  >Mode : Maj </p>
+                            {% else %}
+                                <p style="background-color:grey;"  style="font-style:bold;" style="color:RGB(255, 255, 255)"  >Mode : Min </p>
+                            {% endif %}
+                            <p style="background-color:grey;"  style="font-style:bold;" style="color:RGB(255, 255, 255)"  >Tempo : {{ tempo }} </p>
                         </center>
+                        
                 </div> <!-- end featured -->
 
             </div> <!-- end col-full --> 
@@ -69,40 +82,123 @@
         
         
         
-        <center><div class="row half-bottom">
+        <center><div class="row half-bottom" id="stattounne">
             <div class="col-twelve">
                     <img src="{% static "images/feature.png" %}"width="300" height="54" >
                 <ul class="stats-tabs">
-                    <li><a href="#">{{ spot_track.danceability }} <em>Danceability</em></a></li>
-                    <li><a href="#">{{ spot_track.speechiness }} <em>Speechiness</em></a></li>
-                    <li><a href="#">{{ spot_track.acousticness }} <em>Acousticness</em></a></li>
-                    <li><a href="#">{{ spot_track.valence }} <em>Valence</em></a></li>
-                    <li><a href="#">{{ spot_track.instrumentalness }} <em>Instrumentalness</em></a></li>
-                    <li><a href="#">{{ spot_track.energy }} <em>Energy</em></a></li>
+                    <li><a href="#"style="color:RGB(255, 99, 132)">{{ spot_track.danceability }} <em>Danceability</em></a></li>
+                    <li><a href="#"style="color:RGB(54, 162, 235)">{{ spot_track.speechiness }} <em>Speechiness</em></a></li>
+                    <li><a href="#"style="color:RGB(255, 206, 86)">{{ spot_track.acousticness }} <em>Acousticness</em></a></li>
+                    <li><a href="#"style="color:RGB(75, 192, 192)">{{ spot_track.valence }} <em>Valence</em></a></li>
+                    <li><a href="#"style="color:RGB(153, 102, 255)">{{ spot_track.instrumentalness }} <em>Instrumentalness</em></a></li>
+                    <li><a href="#"style="color:RGB(255, 159, 64)">{{ spot_track.energy }} <em>Energy</em></a></li>
+                    <li><a href="#"style="color:RGB(63, 214, 24)">{{ spot_track.liveness }} <em>Liveness</em></a></li>
                 </ul>
             </div>
 
         </div> <!-- end row --></center>
 
-<div class="chart" style="width: 50%; margin: auto">
-        <h3 style="font-weight: bolder">Chart - track features</h3>
-          <table id="data-table" border="1" cellpadding="20" cellspacing="50">
-            <thead>
-              <tr>
-                 <td>&nbsp;</td>
-                 <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for item in table_track %}
-              <tr>
-                 <th scope="row"></th>
-                 <td>{{ item }}</td>
-                <td></td>
-              </tr>
-            {% endfor %}
-            </tbody>
-          </table>
+<div  style="width: 60%;height: 60%; margin: auto">
+          <canvas id="myChart" width="500" height="500"></canvas>
+          
 </div>
+
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+        labels: ['Danceability', 'Speechiness', 'Acousticness', 'Valence', 'Instrumentalness', 'Energy', 'Liveness'],
+        datasets: [{
+            label: 'Value * 100',
+            data: {{ table_track }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(63, 214, 24, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(63, 214, 24, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script>
+var key_name;
+var key_name_color;
+switch ({{ key }}) {
+  case 0:
+    key_name = "C";
+    key_name_color = key_name.fontcolor("#28ff00");
+    
+    break;
+  case 1:
+    key_name = "C#/Db";
+    key_name_color = key_name.fontcolor("#00ffe8");
+    break;
+  case 2:
+    key_name = "D";
+    key_name_color = key_name.fontcolor("#007cff");
+    break;
+  case 3:
+    key_name = "D#/Eb";
+    key_name_color = key_name.fontcolor("#0500ff");
+    break;
+  case 4:
+    key_name = "E";
+    key_name_color = key_name.fontcolor("#4500ea");
+    break;
+  case 5:
+    key_name = "F";
+    key_name_color = key_name.fontcolor("#57009e");
+    break;
+  case  6:
+    key_name = "F#/Gb";
+    key_name_color = key_name.fontcolor("#740000");
+    break;
+  case  7:
+    key_name = "G";
+    key_name_color = key_name.fontcolor("#b30000");
+    break;
+  case  8:
+    key_name = "G#/Ab";
+    key_name_color = key_name.fontcolor("#ee0000");
+    break;
+  case  9:
+    key_name = "A";
+    key_name_color = key_name.fontcolor("#ff6300");
+    break;
+  case  10:
+    key_name = "A#/Bb";
+    key_name_color = key_name.fontcolor("#ffec00");
+    break;
+  case  11:
+    key_name = "B";
+    key_name_color = key_name.fontcolor("#99ff00");
+                
+}
+document.getElementById("key_name").innerHTML = "Key : " + key_name_color;
+</script>
 
 {% endblock %}

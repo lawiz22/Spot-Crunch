@@ -105,33 +105,39 @@
 		<tr>    <th>#</th>
                 <th>Track</th>
                 <th>Ecouteur</th>
+				<th>ISRC</th>
                 <th>Like_it</th>
-                <th>Danceability</th>
-                <th>Speechiness</th>
-                <th>Acousticness</th>
+                <th>Dance</th>
+                <th>Speech</th>
+                <th>Acoust</th>
                 <th>Valence</th>
-                <th>Instrumentalness</th>
+                <th>Instru</th>
                 <th>Energy</th>
                 <th>Liveness</th>
                 <th>Key</th>
+				<th>Mode</th>
                 <th>Tempo</th>
-                <th>ISRC</th></tr>
+                <th>Duration</th>
+                <th>Loudness</th></tr>
 	</thead>
 	<tfoot>
 		        <tr><th>#</th>
                 <th>Track</th>
                 <th>Ecouteur</th>
+				<th>ISRC</th>
                 <th>Like_it</th>
-                <th>Danceability</th>
-                <th>Speechiness</th>
-                <th>Acousticness</th>
+                <th>Dance</th>
+                <th>Speech</th>
+                <th>Acoust</th>
                 <th>Valence</th>
-                <th>Instrumentalness</th>
+                <th>Instru</th>
                 <th>Energy</th>
                 <th>Liveness</th>
                 <th>Key</th>
+				<th>Mode</th>
                 <th>Tempo</th>
-                <th>ISRC</th></tr></tr>
+                <th>Duration</th>
+				<th>Loudness</th></tr></tr>
 		<tr>
 			<td colspan="14">
 				<div class="pager"> <span class="left">
@@ -161,6 +167,7 @@
             <td scope="row" href=>{{ track.id }}</td>
             <td><a href="{% url 'track' track_id=track.track_id %}">{{ track }} </a> </td>
             <td>{{ track.user_name }}</td>
+			<td>{{ track.isrc }}</td>
             <td>
 			{% if  track.like_it == '[false]' %}
                      NON <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="30"  height="30" style="float: right; ">
@@ -175,8 +182,10 @@
             <td>{{ track.energy }}</td>
             <td>{{ track.liveness }}</td>
             <td>{{ track.key }}</td>
+			<td>{{ track.mode }}</td>
             <td>{{ track.tempo }}</td>
-            <td>{{ track.isrc }}</td>
+            <td>{{ track.duration_ms }}</td>
+			<td>{{ track.loudness }}</td>
         </tr>
         {% endfor %}
 	</tbody>
@@ -189,3 +198,4 @@
 </body>
 
 {% endblock %}
+

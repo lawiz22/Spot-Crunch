@@ -86,7 +86,7 @@ html, body {
 
 body {
    background: #19191b;
-   font-family: "metropolis-regular", sans-serif;
+   font-family: "metropolis-bold", sans-serif;
    font-size: 1.6rem;
    font-style: normal;
    font-weight: normal;
@@ -121,7 +121,7 @@ a:hover, a:active {
  * 
  * ------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-   font-family: "librebaskerville-bold", serif;
+   font-family: "metropolis-bold", serif;
    
    font-style: normal;
    font-weight: normal;
@@ -466,7 +466,7 @@ dl,
 form,
 .video-container,
 .cl-custom-select {
-   margin-bottom: 3rem;
+   
 }
 
 
@@ -1597,7 +1597,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .format-quote blockquote p, .format-link .link-wrap p {
-   font-family: "librebaskerville-bold", serif;
+   font-family: "metropolis-bold", serif;
    color: #000000;
    padding: 7.8rem 0 0 0;
    margin-bottom: 3.3rem;
@@ -3738,7 +3738,7 @@ footer h4::after {
 }
 
 .s-content__nav a {
-   font-family: "librebaskerville-bold", serif;
+   font-family: "metropolis-bold", serif;
    font-size: 2.2rem;
    line-height: 1.5;
    color: #19191b;

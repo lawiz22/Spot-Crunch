@@ -389,8 +389,7 @@ class TrackAudioFeaturesView(View):
                         int(track['valence'] * 100),
                         int(track['instrumentalness'] * 100),
                         int(track['energy'] * 100),
-                        int(track['liveness'] * 100),
-                        int(track['key'])
+                        int(track['liveness'] * 100)
             
                              ]
                 ctx = {
@@ -402,8 +401,11 @@ class TrackAudioFeaturesView(View):
                         'track_name': track_name,
                         'isrc' : track2['external_ids']['isrc'],
                         'image_album' : track2['album']['images'],
-                        'like_track': like_track
-                    }
+                        'like_track': like_track,
+                        'key': track['key'],
+                        'mode':track['mode'],
+                        'tempo': float(format(track['tempo'], '.3f'))
+                                            }
                 return render(request, 'track.html', ctx)
         table_track = [
             int(track['danceability'] * 100),
@@ -412,8 +414,7 @@ class TrackAudioFeaturesView(View):
             int(track['valence'] * 100),
             int(track['instrumentalness'] * 100),
             int(track['energy'] * 100),
-            int(track['liveness'] * 100),
-            int(track['key'])
+            int(track['liveness'] * 100)
             
             ]
         ctx = {
@@ -425,9 +426,12 @@ class TrackAudioFeaturesView(View):
             'track_name': track_name,
             'isrc' : track2['external_ids']['isrc'],
             'image_album' : track2['album']['images'],
-            'like_track': like_track
+            'like_track': like_track,
+            'key': track['key'],
+            'mode':track['mode'],
+            'tempo': float(format(track['tempo'], '.3f'))
                    }
-        
+        print(ctx)
         return render(request, 'track.html', ctx)
 
 
