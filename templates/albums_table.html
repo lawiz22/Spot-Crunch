@@ -106,6 +106,7 @@
                 <th>Album</th>
                 <th>Ecouteur</th>
                 <th>Like_it</th>
+				<th>Popularity</th>
                 <th>UPC</th>
                 <th>Danceability</th>
                 <th>Speechiness</th>
@@ -120,6 +121,7 @@
                 <th>Album</th>
                 <th>Ecouteur</th>
                 <th>Like_it</th>
+				<th>Popularity</th>
                 <th>UPC</th>
                 <th>Danceability</th>
                 <th>Speechiness</th>
@@ -154,9 +156,10 @@
 		 {% for album in albums %}
         <tr>
             <td> {{ album.id }}</td>
-            <td>{{ album }}</td>
+            <td><a href="{% url 'album' album_id=album.album_id %}">{{ album }} </a> </td>
             <td>{{ album.user_name }}</td>
             <td>{{ album.like_it }}</td>
+			<td>{{ album.popularity }}</td>
             <td>{{ album.upc }}</td>
             <td>{{ album.danceability }}</td>
             <td>{{ album.speechiness }}</td>

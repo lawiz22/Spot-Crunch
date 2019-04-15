@@ -22,6 +22,7 @@ class Track(models.Model):
     like_it = models.CharField(max_length=32, null=True)
     user_id = models.CharField(max_length=32, default='')
     user_name = models.CharField(max_length=128, default='')
+    popularity = models.FloatField(null=True)
 
     def __str__(self):
         return self.track_artist + ' - ' + self.track_name
@@ -42,6 +43,7 @@ class Album(models.Model):
     like_it = models.CharField(max_length=32, null=True)
     user_id = models.CharField(max_length=32, default='')
     user_name = models.CharField(max_length=128, default='')
+    popularity = models.FloatField(null=True)
 
     def __str__(self):
         return self.album_artist + ' - ' + self.album_name

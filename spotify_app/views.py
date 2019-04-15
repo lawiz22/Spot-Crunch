@@ -67,7 +67,7 @@ class Kesjecoute(View):
             artists = currently_played['artists']
             artist_quijoue =  get_artist(authorization_header, artists[0]['id'])
 
-            print (artist_quijoue)
+           
            
             ctx = {
                     'currently_played': currently_played,
@@ -170,6 +170,7 @@ class AlbumView(View):
         album = get_album(authorization_header, album_id)
         user_profile = get_users_profile(authorization_header)
         tracks = album['tracks']['items']
+        popularity = album['popularity']
         dict_isrc_track = {'id': [],'track_isrc': []}
         for track in tracks:
             track = get_track_audio_features(authorization_header, track['id'])
@@ -183,7 +184,7 @@ class AlbumView(View):
         like = json.dumps(tracks4)
 
         if Album.objects.filter(album_id=album_id,user_id=user_profile['id']).exists():
-            spot_album = Album.objects.filter(album_id=album_id,user_id=user_profile['id']).update(like_it=like)
+            spot_album = Album.objects.filter(album_id=album_id,user_id=user_profile['id']).update(like_it=like,popularity = album['popularity'])
             spot_album = Album.objects.get(album_id=album_id,user_id=user_profile['id'])
         else:
             try:
@@ -215,7 +216,8 @@ class AlbumView(View):
                                                 valence=float(format(sum(dict_track['valence']) / tracks_number, '.3f')),
                                                 instrumentalness=float(format(sum(dict_track['instrumentalness']) / tracks_number, '.3f')),
                                                 energy=float(format(sum(dict_track['energy']) / tracks_number, '.3f')),
-                                                liveness=float(format(sum(dict_track['liveness']) / tracks_number, '.3f')))
+                                                liveness=float(format(sum(dict_track['liveness']) / tracks_number, '.3f')),
+                                                popularity = album['popularity'])
 
             except KeyError:
                 ctx = {
@@ -224,7 +226,8 @@ class AlbumView(View):
                     'user_name': user_profile['display_name'],
                     'tracks': tracks,
                     'like': like,
-                    'dict_isrc_track' : dict_isrc_track
+                    'dict_isrc_track' : dict_isrc_track,
+                    'popularity' : album['popularity']
                     
                 }
                 return render(request, 'album.html', ctx)
@@ -245,7 +248,8 @@ class AlbumView(View):
             'spot_album': spot_album,
             'album_avg': album_avg,
             'like': like,
-            'dict_isrc_track': dict_isrc_track
+            'dict_isrc_track': dict_isrc_track,
+            'popularity' : album['popularity']
         }
         return render(request, 'album.html', ctx)
 
@@ -353,11 +357,12 @@ class TrackAudioFeaturesView(View):
         like_track = json.dumps(track3)
        
         track_name = track2['name']
+        popularity = track2['popularity']
         track_artist = track2['album']['artists'][0]['name']
-        print(track_artist)
+        
         if Track.objects.filter(track_id=track_id,user_id=user_profile['id']).exists():
             
-                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track)
+                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track,popularity = track2['popularity'])
                 spot_track = Track.objects.get(track_id=track_id,user_id=user_profile['id']) 
         else:
             try:
@@ -380,7 +385,8 @@ class TrackAudioFeaturesView(View):
                                                 energy=float(format(track['energy'], '.3f')),
                                                 liveness=float(format(track['liveness'], '.3f')),
                                                 key=track['key'],
-                                                like_it=like_track)
+                                                like_it=like_track,
+                                                popularity = track2['popularity'])
             except KeyError:
                 table_track = [
                         int(track['danceability'] * 100),
@@ -404,7 +410,8 @@ class TrackAudioFeaturesView(View):
                         'like_track': like_track,
                         'key': track['key'],
                         'mode':track['mode'],
-                        'tempo': float(format(track['tempo'], '.3f'))
+                        'tempo': float(format(track['tempo'], '.3f')),
+                        'popularity': track2['popularity']
                                             }
                 return render(request, 'track.html', ctx)
         table_track = [
@@ -429,9 +436,10 @@ class TrackAudioFeaturesView(View):
             'like_track': like_track,
             'key': track['key'],
             'mode':track['mode'],
-            'tempo': float(format(track['tempo'], '.3f'))
+            'tempo': float(format(track['tempo'], '.3f')),
+            'popularity': track2['popularity']
                    }
-        print(ctx)
+        
         return render(request, 'track.html', ctx)
 
 

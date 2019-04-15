@@ -107,6 +107,7 @@
                 <th>Ecouteur</th>
 				<th>ISRC</th>
                 <th>Like_it</th>
+				<th>Popularity</th>
                 <th>Dance</th>
                 <th>Speech</th>
                 <th>Acoust</th>
@@ -126,6 +127,7 @@
                 <th>Ecouteur</th>
 				<th>ISRC</th>
                 <th>Like_it</th>
+				<th>Popularity</th>
                 <th>Dance</th>
                 <th>Speech</th>
                 <th>Acoust</th>
@@ -174,6 +176,7 @@
             {% else %}                   
                      OUI <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="30"  height="30" style="float: right;  ">
             {% endif %}</td>
+			<td>{{ track.popularity }}</td>
             <td>{{ track.danceability }}</td>
             <td>{{ track.speechiness }}</td>
             <td>{{ track.acousticness }}</td>

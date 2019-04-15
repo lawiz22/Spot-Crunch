@@ -24,7 +24,7 @@
                         <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
                             <img src="{{ album.images.1.url }}" style="float: left; margin-left: 60px" width="280"  height="280">
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">ALBUM</a></span>
+                                <span class="entry__category"><a href="#0">Popularity : {{ popularity }}</a></span>
                                 
                                 <h1><a href="#0" title="">{{ album.name }} - {{ album.artists.0.name }}</a></h1>
                                     
