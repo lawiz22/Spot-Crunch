@@ -8,10 +8,10 @@
                 <div class="featured">
 
                     <div class="featured__column featured__column--big">
-                        <div class="entry" style="background-image:url('{{ user_profile.images.0.url }}');">
+                        <div class="entry" style="background-image:url('{% static "images/zevmhkG.png" %}');">
                             
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">Musique</a></span>
+                                <span class="entry__category"><a href="{% url 'stat_user' %}">Stats</a></span>
 
                                 <h1><a href="#0" title="">{{ user_profile.display_name }}</a></h1>
 

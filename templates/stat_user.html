@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/Chart.css' %}">
+<script src="{% static "js/Chart.bundle.js" %}"></script>
+
+<div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry">
+                            
+                            <div class="entry__content">
+                                
+                                 <canvas id="myChart" width = "400" height = "350"></canvas>
+                                
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        <div class="entry" style="">
+                            
+                        <div class="entry__content">
+                                  <canvas id="myPieChart" width = "400" height = "350"></canvas>
+                            
+                        </div> <!-- end entry__content -->
+  
+                        </div> <!-- end entry -->
+
+                        <div class="entry" style="">
+
+                            <div class="entry__content">
+                                
+                            </div> <!-- end entry__content -->
+
+                        </div> <!-- end entry -->
+
+                    </div> <!-- end featured__small -->
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+ </section> <!-- end s-extra -->  
+
+
+
+
+ <script>
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, 
+    {
+        type: 'radar',
+        data: {
+            labels: ['Danceability', 'Speechiness', 'Acousticness', 'Valence', 'Instrumentalness', 'Energy', 'Liveness'],
+            
+            datasets: [{
+                label: 'OUI',
+                backgroundColor: "orange",
+                borderColor: "rgba(0,0,200,0.6)",
+                data: {{ table_track_oui }},
+                fill: true,
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                pointBorderColor: "#fff",
+                pointBackgroundColor: "rgba(255,99,132,1)",
+                pointBorderColor: "#fff",
+                borderWidth: 1
+            },
+            {
+                label: 'NON',
+                backgroundColor: "cornflowerblue",
+                borderColor: "rgba(0,0,200,0.6)",
+                data: {{ table_track_non }},
+                fill: true,
+                backgroundColor: "rgba(179,181,198,0.2)",
+                borderColor: "rgba(179,181,198,1)",
+                pointBorderColor: "#fff",
+                pointBackgroundColor: "rgba(179,181,198,1)",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scale: {            
+        ticks: {
+            display: false
+        }
+    }
+    }
+});
+
+</script>
+ 
+
+
+{% endblock %}

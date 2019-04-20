@@ -20,6 +20,7 @@ from spotify_app.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', Index.as_view(), name='index'),
+    url(r'^stat_user', Statuser.as_view(), name='stat_user'),
     url(r'^kes_jecoute$', Kesjecoute.as_view(), name='kes_jecoute'),
     url(r'^new_release/$', New_Release.as_view(), name='new_release'),
     url(r'^callback/q', Callback.as_view(), name='callback'),

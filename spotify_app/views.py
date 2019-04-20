@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views import View
 from .user_data_context import *
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.db.models import Sum
 import requests
 import json
 from .models import Track, Album
@@ -40,6 +41,103 @@ class Index(View):
             return render(request, 'main.html',ctx)
         except KeyError:
             return redirect('callback')    
+
+class Statuser(View):
+
+    def get(self, request):
+        if 'access_token' not in request.session:
+            return redirect('callback')
+
+        access_token = request.session.get('access_token')
+
+        authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+        try:
+            user_profile = get_users_profile(authorization_header)
+            tracks = Track.objects.filter(user_id=user_profile['id']).count()
+            tracks_oui = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').count()
+            tracks_non = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').count()
+            
+            albums = Album.objects.filter(user_id=user_profile['id']).count()
+            albums_oui = Album.objects.filter(user_id=user_profile['id'],like_it='[true]').count()
+            albums_non = Album.objects.filter(user_id=user_profile['id'],like_it='[false]').count()
+            
+            dict_track_oui = {'danceability': [], 'speechiness': [], 'acousticness': [],
+                              'valence': [], 'instrumentalness': [], 'energy': [], 'liveness': []}
+            dict_track_non = {'danceability': [], 'speechiness': [], 'acousticness': [],
+                              'valence': [], 'instrumentalness': [], 'energy': [], 'liveness': []}                              
+            
+            Dancesum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('danceability'))
+            dict_track_oui['danceability'].append(Dancesum['danceability__sum']/tracks_oui)
+            Speechsum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('speechiness'))
+            dict_track_oui['speechiness'].append(Speechsum['speechiness__sum']/tracks_oui)
+            Acousticsum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('acousticness'))
+            dict_track_oui['acousticness'].append(Acousticsum['acousticness__sum']/tracks_oui)
+            Valencesum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('valence'))
+            dict_track_oui['valence'].append(Valencesum['valence__sum']/tracks_oui)
+            Instrumentalsum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('instrumentalness'))
+            dict_track_oui['instrumentalness'].append(Instrumentalsum['instrumentalness__sum']/tracks_oui)
+            Energysum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('energy'))
+            dict_track_oui['energy'].append(Energysum['energy__sum']/tracks_oui)
+            Livenesssum = Track.objects.filter(user_id=user_profile['id'],like_it='[true]').aggregate(Sum('liveness'))
+            dict_track_oui['liveness'].append(Livenesssum['liveness__sum']/tracks_oui)
+            
+            Dancesum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('danceability'))
+            dict_track_non['danceability'].append(Dancesum['danceability__sum']/tracks_non)
+            Speechsum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('speechiness'))
+            dict_track_non['speechiness'].append(Speechsum['speechiness__sum']/tracks_non)
+            Acousticsum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('acousticness'))
+            dict_track_non['acousticness'].append(Acousticsum['acousticness__sum']/tracks_non)
+            Valencesum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('valence'))
+            dict_track_non['valence'].append(Valencesum['valence__sum']/tracks_non)
+            Instrumentalsum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('instrumentalness'))
+            dict_track_non['instrumentalness'].append(Instrumentalsum['instrumentalness__sum']/tracks_non)
+            Energysum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('energy'))
+            dict_track_non['energy'].append(Energysum['energy__sum']/tracks_non)
+            Livenesssum = Track.objects.filter(user_id=user_profile['id'],like_it='[false]').aggregate(Sum('liveness'))
+            dict_track_non['liveness'].append(Livenesssum['liveness__sum']/tracks_non)
+
+
+            table_track_oui = [
+                        dict_track_oui['danceability'] ,
+                        dict_track_oui['speechiness'] ,
+                        dict_track_oui['acousticness'] ,
+                        dict_track_oui['valence'] ,
+                        dict_track_oui['instrumentalness'] ,
+                        dict_track_oui['energy'] ,
+                        dict_track_oui['liveness'] 
+                             ]
+            table_track_non = [
+                        dict_track_non['danceability'] ,
+                        dict_track_non['speechiness'] ,
+                        dict_track_non['acousticness'] ,
+                        dict_track_non['valence'] ,
+                        dict_track_non['instrumentalness'] ,
+                        dict_track_non['energy'] ,
+                        dict_track_non['liveness'] 
+                             ] 
+
+            dict_track = {'oui': [], 'non': []}
+            dict_track['oui'].append(table_track_oui)
+            dict_track['non'].append(table_track_non)
+            print(dict_track)
+
+
+            ctx = {
+                    'user_profile': user_profile,
+                    'nb_de_tounne': tracks,
+                    'nb_de_album': albums,
+                    'tracks_oui': tracks_oui,
+                    'tracks_non': tracks_non,
+                    'albums_oui': albums_oui,
+                    'albums_non': albums_non,
+                    'table_track_oui' : table_track_oui,
+                    'table_track_non' : table_track_non,
+                    'dict_track' : dict_track
+                    }
+            print (ctx)
+            return render(request, 'stat_user.html',ctx)
+        except KeyError:
+            return redirect('callback')
 
 
 class Kesjecoute(View):
@@ -80,8 +178,8 @@ class Kesjecoute(View):
             
          
             return render(request, 'kes_jecoute.html', ctx)
-        except KeyError:
-            return redirect('callback')           
+        except:
+            return redirect('index')           
 
 class New_Release(View):
 
@@ -413,6 +511,7 @@ class TrackAudioFeaturesView(View):
                         'tempo': float(format(track['tempo'], '.3f')),
                         'popularity': track2['popularity']
                                             }
+                print(table_track)                                            
                 return render(request, 'track.html', ctx)
         table_track = [
             int(track['danceability'] * 100),
@@ -439,7 +538,7 @@ class TrackAudioFeaturesView(View):
             'tempo': float(format(track['tempo'], '.3f')),
             'popularity': track2['popularity']
                    }
-        
+        print(table_track)
         return render(request, 'track.html', ctx)
 
 
