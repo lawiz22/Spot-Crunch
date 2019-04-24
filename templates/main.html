@@ -32,52 +32,55 @@
 
                     <div class="featured__column featured__column--small">
 
-                        <div class="entry" style="background-image:url('{% static "images/featured-guitarman.jpg" %}');">
+                        <div class="entry" style="background-image:url('');">
                             
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">VOS CHANSONS DANS LA BD</a></span>
+                                <span class="entry__category"><a href="#0">STATS USAGERS</a></span>
 
-                                <h1><a href="#0" title=""> Nombre total tracks BD : {{ nb_de_tounne }}</a>  </h1>
-                                <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="50"  height="50" > : {{ tracks_oui }}</a></h1>
-                                <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="50"  height="50" > : {{ tracks_non }}</a></h1>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total tracks : {{ nb_de_tounne }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ tracks_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ tracks_non }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total album : {{ nb_de_album }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ albums_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ albums_non }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total artist : {{ nb_de_artist }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ artists_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ artists_non }}</a></p>
 
+                               
                                 <div class="entry__info">
                                     <a href="#0" class="entry__profile-pic">
                                         <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
                                     </a>
 
                                     <ul class="entry__meta">
-                                        <li><a href="#0">ID Spotify</a></li>
+                                        <li><a href="#0">Pour usager </a></li>
                                         <li>{{ user_profile.id }}</li>
                                     </ul>
                                 </div>
                             </div> <!-- end entry__content -->
                           
                         </div> <!-- end entry -->
-
-                        <div class="entry" style="background-image:url('{% static "images/medium.jpg" %}');">
-
+                        <div class="entry" style="background-image:url('');">
+                            
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">VOS ALBUMS DANS LA BD</a></span>
-                               
-                                        <h1><a href="#0" title=""> Nombre total albums BD : {{ nb_de_album }}</a>  </h1>
-                                        <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="50"  height="50" > : {{ albums_oui }}</a></h1>
-                                        <h1><a href="#0" title=""><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="50"  height="50" > : {{ albums_non }}</a></h1>
-    
-                                
-                                <div class="entry__info">
-                                    <a href="#0" class="entry__profile-pic">
-                                        <img class="avatar" src="{{ user_profile.images.0.url }}" alt="">
-                                    </a>
+                                <span class="entry__category"><a href="#0">STATS GENRALE</a></span>
 
-                                    <ul class="entry__meta">
-                                        <li><a href="#0">ID Spotify</a></li>
-                                        <li>{{ user_profile.id }}</li>
-                                    </ul>
-                                </div>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total tracks : {{ tracks_total }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ tracks_total_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ tracks_non }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total album : {{ albums_total }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ albums_total_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ albums_total_non }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"> Nombre total artist : {{ artists_total }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-filled.png" %}" width="20"  height="20" > : {{ artists_total_oui }}</a></p>
+                                <p><a style="color:RGB(255, 255, 255)"><img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="20"  height="20" > : {{ artists_total_non }}</a></p>
+
                             </div> <!-- end entry__content -->
-
+                          
                         </div> <!-- end entry -->
+
+                        
 
                     </div> <!-- end featured__small -->
                 </div> <!-- end featured -->

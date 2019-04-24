@@ -1,20 +1,83 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+
+
+
 <div class="pageheader-content row">
 
-        <div class="row masonry-wrap">
-            <div class="masonry">
+            <div class="col-full">
 
-                <div class="grid-sizer"></div>
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('{{ artist_all.images.0.url }}');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">Popularity : {{ spot_artist.popularity|floatformat:"0" }}</a></span>
+                                
+                                <h1><a href="#0" title="">{{ artist_all.name }}</a></h1>
+                                    
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                      <img class="avatar" src="{% static "images/spotify-transparent-wiki-6.png" %}" style="margin-top: 10px" alt="">      
+                                    </a>
+                                    <ul class="entry__meta">
+                                        <li><a href="">ID Spotify</a></li>
+                                        <li>{{ artist_all.id }}</li>
+                                        
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+                    <div class="entry" style="">
+                            
+                            <div class="entry__content">
+                               
+                            </div> <!-- end entry__content -->
+                          
+                        </div> <!-- end entry -->
+                        <center>
+                            
+                            <p> Inscrit dans la BD de {{ user_name }}</p>
+
+                        </center>
+                        
+                        <center>
+                            {% if like_it == '[false]' %}  
+                                <img src="{% static "images/heart-curvy-outline-notfilled.png" %}" width="40"  height="40"  >
+                            {% else %}
+                                <img src="{% static "images/heart-curvy-outline-filled.png" %}" width="40"  height="40" >
+                            {% endif %}  
+                        </center>
+
+                        <center>
+                            <p style="color:RGB(54, 162, 235)" > Popularity :  {{ spot_artist.popularity|floatformat:"0" }}</p>
+                            <p style="color:RGB(54, 162, 235)" > Followers :  {{ spot_artist.followers|floatformat:"0" }}</p>
+                            <br>
+                            {% for genre in spot_artist.genres %}
+                               <span class="entry__category"><a>{{ genre }}</a></span>
+                            {% endfor %}   
+                        </center>
+                </div> <!-- end featured -->
+
+            
+    
+        <div class="row masonry-wrap">
+         
+            <div class="masonry">
+            
+                <div class="grid-sizer" style="margin-top: 20px"></div>
 
 
                 {% for album in artist.items %}
                     
 
-                        <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        <article class="masonry__brick entry format-standard"  style="margin-left: -30px" data-aos="fade-up">
                                 
-                            <div class="entry__thumb">
+                            <div class="entry__thumb" >
                                 <a href="{% url 'album' album.id %}" class="entry__thumb-link">
                                     <img src="{{ album.images.1.url }}" >
                                 </a>
@@ -37,9 +100,11 @@
                 
 
                 
-
+            
             </div> <!-- end masonry -->
+            
         </div> <!-- end masonry-wrap -->
-
+     
+</div> <!-- end col-full --> 
 </div>   
 {% endblock %}

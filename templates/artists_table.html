@@ -1,0 +1,170 @@
+
+{% load static %}
+{% block head %}
+     <!-- jQuery -->
+
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+     <!-- Demo stuff -->
+
+<!-- CSS
+    ================================================== -->
+    
+ <link rel="stylesheet" href="{% static "css/base.css" %}">
+ <link rel="stylesheet" href="{% static "css/vendor.css" %}">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+
+     <!-- Tablesorter: required -->
+	<link rel="stylesheet" href="{% static "css/theme.metro-dark.css" %}">
+	<script src="{% static "js/jquery.tablesorter.js" %}"></script>
+	<script src="{% static "js/jquery.tablesorter.widgets.js" %}"></script>
+
+    <!-- Tablesorter: optional -->
+	<link rel="stylesheet" href="{% static "addons/pager/jquery.tablesorter.pager.css" %}">
+	<style>
+	.left { float: left; }
+	.right {
+		float: right;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		-ms-user-select: none;
+	}
+	.pager .prev, .pager .next, .pagecount { cursor: pointer; }
+	.pager a {
+		text-decoration: none;
+		color: black;
+	}
+	.pager a.current {
+		color: #0080ff;
+	}
+	</style>
+
+	<script src="{% static "addons/pager/jquery.tablesorter.pager.js" %}"></script>
+	<script src="{% static "pager-custom-controls.js" %}"></script>
+<script id="js">$(function(){
+
+	// initialize custom pager script BEFORE initializing tablesorter/tablesorter pager
+	// custom pager looks like this:
+	// 1 | 2 … 5 | 6 | 7 … 99 | 100
+	//   _       _   _        _     adjacentSpacer
+	//       _           _          distanceSpacer
+	// _____               ________ ends (2 default)
+	//         _________            aroundCurrent (1 default)
+
+	var $table = $('table'),
+		$pager = $('.pager');
+
+	$.tablesorter.customPagerControls({
+		table          : $table,                   // point at correct table (string or jQuery object)
+		pager          : $pager,                   // pager wrapper (string or jQuery object)
+		pageSize       : '.left a',                // container for page sizes
+		currentPage    : '.right a',               // container for page selectors
+		ends           : 2,                        // number of pages to show of either end
+		aroundCurrent  : 1,                        // number of pages surrounding the current page
+		link           : '<a href="#">{page}</a>', // page element; use {page} to include the page number
+		currentClass   : 'current',                // current page class name
+		adjacentSpacer : ' | ',                    // spacer for page numbers next to each other
+		distanceSpacer : ' \u2026 ',               // spacer for page numbers away from each other (ellipsis &amp;hellip;)
+		addKeyboard    : true                      // add left/right keyboard arrows to change current page
+	});
+
+	// initialize tablesorter & pager
+	$table
+		.tablesorter({
+			theme: 'metro-dark',
+			widgets: ['zebra', 'columns', 'filter']
+		})
+		.tablesorterPager({
+			// target the pager markup - see the HTML block below
+			container: $pager,
+			size: 10,
+			output: 'showing: {startRow} to {endRow} ({filteredRows})'
+		});
+
+});
+</script>
+    
+
+{% endblock %}
+
+{% block content %}
+<body id="pager-demo">
+	<div id="main">
+<!-- pager -->
+<div class="pager">
+	<span class="pagedisplay"></span> 
+</div>
+<div class="header__logo" >
+                    <a class="logo" href="{% url 'index' %}">
+                         <img  src="{% static "images/logo_bd.png" %}" alt="Homepage"> 
+                    </a> 
+</div> 
+<table class="tablesorter">
+	<thead>
+		<tr>    <th>#</th>
+                <th>Artist</th>
+                <th>Id Spotify</th>
+                <th>Like_it</th>
+				<th>Popularity</th>
+                <th>Followers</th>
+                <th>Genres</th>
+                <th>Ecouteur</th>
+            </tr>
+	</thead>
+	<tfoot>
+		        <tr><th>#</th>
+                <th>Artist</th>
+                <th>Id Spotify</th>
+                <th>Like_it</th>
+				<th>Popularity</th>
+                <th>Followers</th>
+                <th>Genres</th>
+                <th>Ecouteur</th>
+            </tr>
+		<tr>
+			<td colspan="12">
+				<div class="pager"> <span class="left">
+					# per page:
+					<a href="#" class="current">10</a> |
+					<a href="#">25</a> |
+					<a href="#">50</a> |
+					<a href="#">100</a>
+				</span>
+				<span class="right">
+					<span class="prev">
+						<img src="http://mottie.github.com/tablesorter/addons/pager/icons/prev.png" /> Prev&nbsp;
+					</span>
+					<span class="pagecount"></span>
+					&nbsp;<span class="next">Next
+						<img src="http://mottie.github.com/tablesorter/addons/pager/icons/next.png" />
+					</span>
+				</span>
+				</div>
+			</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		 {% for artist in artists %}
+        <tr>
+            <td> {{ artist.id }}</td>
+            <td><a href="{% url 'artist' artist_id=artist.artist_id %}">{{ artist.artist_name }} </a> </td>
+            <td>{{ artist.artist_id }}</td>
+            <td>{{ artist.like_it }}</td>
+			<td>{{ artist.popularity }}</td>
+            <td>{{ artist.followers }}</td>
+            <td>{{ artist.genres }}</td>
+            <td>{{ artist.user_name }}</td>
+            
+
+        </tr>
+        {% endfor %}
+	</tbody>
+</table>
+
+	
+
+</div>
+
+</body>
+{% endblock %}

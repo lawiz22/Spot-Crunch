@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.models import Sum
 import requests
 import json
-from .models import Track, Album
+from .models import Track, Album, Artist
 
 
 class Index(View):
@@ -27,7 +27,19 @@ class Index(View):
             albums = Album.objects.filter(user_id=user_profile['id']).count()
             albums_oui = Album.objects.filter(user_id=user_profile['id'],like_it='[true]').count()
             albums_non = Album.objects.filter(user_id=user_profile['id'],like_it='[false]').count()
-            
+            artists = Artist.objects.filter(user_id=user_profile['id']).count()
+            artists_oui = Artist.objects.filter(user_id=user_profile['id'],like_it='[true]').count()
+            artists_non = Artist.objects.filter(user_id=user_profile['id'],like_it='[false]').count()
+            tracks_total = Track.objects.all().count()
+            tracks_total_oui = Track.objects.filter(like_it='[true]').count()
+            tracks_total_non = Track.objects.filter(like_it='[false]').count()
+            albums_total = Album.objects.all().count()
+            albums_total_oui = Album.objects.filter(like_it='[true]').count()
+            albums_total_non = Album.objects.filter(like_it='[false]').count()
+            artists_total = Artist.objects.all().count()
+            artists_total_oui = Artist.objects.filter(like_it='[true]').count()
+            artists_total_non = Artist.objects.filter(like_it='[false]').count()
+
             ctx = {
                     'user_profile': user_profile,
                     'nb_de_tounne': tracks,
@@ -35,7 +47,20 @@ class Index(View):
                     'tracks_oui': tracks_oui,
                     'tracks_non': tracks_non,
                     'albums_oui': albums_oui,
-                    'albums_non': albums_non
+                    'albums_non': albums_non,
+                    'nb_de_artist' : artists,
+                    'artists_oui': artists_oui,
+                    'artists_non' : artists_non,
+                    'tracks_total' : tracks_total,
+                    'tracks_total_oui' : tracks_total_oui,
+                    'tracks_total_non' : tracks_total_non,
+                    'albums_total' : albums_total,
+                    'albums_total_oui' : albums_total_oui,
+                    'albums_total_non' : albums_total_non,
+                    'artists_total' : artists_total,
+                    'artists_total_oui' : artists_total_oui,
+                    'artists_total_non' : artists_total_non
+
                     }
             print (ctx)
             return render(request, 'main.html',ctx)
@@ -116,9 +141,8 @@ class Statuser(View):
                         dict_track_non['liveness'] 
                              ] 
 
-            dict_track = {'oui': [], 'non': []}
-            dict_track['oui'].append(table_track_oui)
-            dict_track['non'].append(table_track_non)
+            dict_track = [tracks_oui, tracks_non]
+          
             print(dict_track)
 
 
@@ -269,6 +293,7 @@ class AlbumView(View):
         user_profile = get_users_profile(authorization_header)
         tracks = album['tracks']['items']
         popularity = album['popularity']
+        artist_id = album['artists'][0]['id']
         dict_isrc_track = {'id': [],'track_isrc': []}
         for track in tracks:
             track = get_track_audio_features(authorization_header, track['id'])
@@ -282,7 +307,7 @@ class AlbumView(View):
         like = json.dumps(tracks4)
 
         if Album.objects.filter(album_id=album_id,user_id=user_profile['id']).exists():
-            spot_album = Album.objects.filter(album_id=album_id,user_id=user_profile['id']).update(like_it=like,popularity = album['popularity'])
+            spot_album = Album.objects.filter(album_id=album_id,user_id=user_profile['id']).update(like_it=like,popularity = album['popularity'],artist_id = artist_id)
             spot_album = Album.objects.get(album_id=album_id,user_id=user_profile['id'])
         else:
             try:
@@ -302,7 +327,7 @@ class AlbumView(View):
                     
                     
 
-                spot_album = Album.objects.create(album_id=album_id, album_artist=album['artists'][0]['name'],
+                spot_album = Album.objects.create(album_id=album_id, album_artist=album['artists'][0]['name'],artist_id = artist_id,
                                                 album_name=album['name'],
                                                 upc=album['external_ids']['upc'],
                                                 like_it=like,
@@ -320,6 +345,7 @@ class AlbumView(View):
             except KeyError:
                 ctx = {
                     'album': album,
+                    'artist_id': artist_id,
                     'upc': album['external_ids']['upc'],
                     'user_name': user_profile['display_name'],
                     'tracks': tracks,
@@ -342,6 +368,7 @@ class AlbumView(View):
             'album': album,
             'upc': album['external_ids']['upc'],
             'user_name': user_profile['display_name'],
+            'artist_id': artist_id,
             'tracks': tracks,
             'spot_album': spot_album,
             'album_avg': album_avg,
@@ -457,15 +484,17 @@ class TrackAudioFeaturesView(View):
         track_name = track2['name']
         popularity = track2['popularity']
         track_artist = track2['album']['artists'][0]['name']
+        artist_id = track2['album']['artists'][0]['id']
         
         if Track.objects.filter(track_id=track_id,user_id=user_profile['id']).exists():
             
-                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track,popularity = track2['popularity'])
+                spot_track = Track.objects.filter(track_id=track_id,user_id=user_profile['id']).update(like_it=like_track,popularity = track2['popularity'],artist_id=artist_id)
                 spot_track = Track.objects.get(track_id=track_id,user_id=user_profile['id']) 
         else:
             try:
                 spot_track = Track.objects.create(track_id=track_id,
                                                 track_artist=track_artist,
+                                                artist_id=artist_id,
                                                 track_name=track_name,
                                                 user_id=user_profile['id'],
                                                 user_name=user_profile['display_name'],
@@ -502,6 +531,7 @@ class TrackAudioFeaturesView(View):
                         'spot_track': spot_track,
                         'table_track': table_track,
                         'track_artist': track_artist,
+                        'artist_id': artist_id,
                         'track_name': track_name,
                         'isrc' : track2['external_ids']['isrc'],
                         'image_album' : track2['album']['images'],
@@ -529,6 +559,7 @@ class TrackAudioFeaturesView(View):
             'spot_track': spot_track,
             'table_track': table_track,
             'track_artist': track_artist,
+            'artist_id': artist_id,
             'track_name': track_name,
             'isrc' : track2['external_ids']['isrc'],
             'image_album' : track2['album']['images'],
@@ -592,8 +623,52 @@ class ArtistView(View):
             return redirect('callback')
         access_token = request.session.get('access_token')
         authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+        user_profile = get_users_profile(authorization_header)
         artist = artist_albums(authorization_header, artist_id)
-        return render(request, 'artist.html', {'artist': artist})
+        artist_all =  get_artist(authorization_header, artist_id)
+        artist_name = artist_all['name']
+        followers = artist_all['followers']['total']
+        popularity = artist_all['popularity']
+        genres = artist_all['genres']
+        user_id=user_profile['id']
+        user_name=user_profile['display_name']
+        tracks4 = get_save_artists(authorization_header, artist_id)
+        like_it = json.dumps(tracks4)
+
+        if Artist.objects.filter(artist_id=artist_id,user_id=user_profile['id']).exists():
+                spot_artist = Artist.objects.filter(artist_id=artist_id,user_id=user_profile['id']).update(like_it=like_it)
+                spot_artist = Artist.objects.get(artist_id=artist_id,user_id=user_profile['id']) 
+        else:
+            try:
+                spot_artist = Artist.objects.create(artist_id=artist_id,
+                                                artist_name=artist_name,                                                
+                                                followers=float(format(followers, '.0f')),
+                                                user_id=user_id,
+                                                user_name=user_name,
+                                                genres = genres,
+                                                popularity = popularity,
+                                                like_it=like_it)
+            except KeyError:
+                ctx = {
+                        'artist': artist,
+                        'spot_artist': spot_artist,
+                        'artist_all' : artist_all,
+                        'user_name' : user_name,
+                        'like_it': like_it
+                                            }
+                print(artist_all)                                            
+                return render(request, 'artist.html', ctx)
+        
+        ctx = {
+                        'artist': artist,
+                        'spot_artist': spot_artist,
+                        'artist_all' : artist_all,
+                        'user_name' : user_name,
+                        'like_it': like_it
+              }
+        print(artist_all)
+
+        return render(request, 'artist.html', ctx)
 
 
 class AlbumTableView(View):
@@ -601,5 +676,11 @@ class AlbumTableView(View):
     def get(self, request):
         albums = Album.objects.all()
         return render(request, 'albums_table.html', {'albums': albums})
+
+class ArtistTableView(View):
+
+    def get(self, request):
+        artists = Artist.objects.all()
+        return render(request, 'artists_table.html', {'artists': artists})        
 
 

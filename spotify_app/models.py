@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import CharField, Model
+from django_mysql.models import ListCharField
+
 
 
 class Track(models.Model):
@@ -23,6 +26,7 @@ class Track(models.Model):
     user_id = models.CharField(max_length=32, default='')
     user_name = models.CharField(max_length=128, default='')
     popularity = models.FloatField(null=True)
+    artist_id = models.CharField(max_length=32, default='')
 
     def __str__(self):
         return self.track_artist + ' - ' + self.track_name
@@ -44,6 +48,26 @@ class Album(models.Model):
     user_id = models.CharField(max_length=32, default='')
     user_name = models.CharField(max_length=128, default='')
     popularity = models.FloatField(null=True)
+    artist_id = models.CharField(max_length=32, default='')
 
     def __str__(self):
         return self.album_artist + ' - ' + self.album_name
+
+
+class Artist(models.Model):
+    artist_id = models.CharField(max_length=32)
+    artist_name = models.CharField(max_length=128)
+    followers = models.FloatField(null=True)
+    popularity = models.FloatField(null=True)
+    genres = ListCharField(
+        base_field=models.CharField(max_length=16,null=True),
+        size=32,
+        max_length=(32 * 17)  # 6 * 10 character nominals, plus commas
+    )
+    like_it = models.CharField(max_length=32, null=True)
+    user_id = models.CharField(max_length=32, default='')
+    user_name = models.CharField(max_length=128, default='')
+    
+
+    def __str__(self):
+        return self.artist_name        

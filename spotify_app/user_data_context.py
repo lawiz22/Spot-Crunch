@@ -25,7 +25,7 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 CLIENT_SIDE_URL = "http://127.0.0.1"
 PORT = 8000
 REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
-SCOPE = "playlist-modify-public playlist-modify-private user-read-recently-played user-library-read user-read-currently-playing user-top-read user-library-modify"
+SCOPE = "playlist-modify-public playlist-modify-private user-read-recently-played user-library-read user-read-currently-playing user-top-read user-library-modify user-follow-read"
 STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
@@ -169,5 +169,11 @@ def artist_albums(auth_header, artist):
 def get_artist(auth_header, artist):
     url = "{}/artists/{}/".format(SPOTIFY_API_URL, artist)
     resp = requests.get(url, headers=auth_header)
-    return resp.json()    
+    return resp.json()   
+
+# https://api.spotify.com/v1/me/albums/contains
+def get_save_artists(auth_header, artist_id):
+    url = "{}/me/following/contains?type=artist&ids={}".format(SPOTIFY_API_URL, artist_id)
+    resp = requests.get(url, headers=auth_header)
+    return resp.json()
  

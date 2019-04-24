@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^track/(?P<track_id>[a-zA-Z0-9]+)', TrackAudioFeaturesView.as_view(), name='track'),
     url(r'tracks_table', TracksTableView.as_view(), name='tracks_table'),
     url(r'albums_table', AlbumTableView.as_view(), name='albums_table'),
+    url(r'artists_table', ArtistTableView.as_view(), name='artists_table'),
     url(r'^https://open.spotify.com/album/(?P<album_id>[a-zA-Z0-9]+)', PushAlbum.as_view(), name='push_album'),
     url(r'search', SearchView.as_view(), name='search'),
     url(r'topartists', TopArtistsView.as_view(), name='topartists'),

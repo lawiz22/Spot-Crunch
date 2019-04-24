@@ -90,7 +90,8 @@ body {
    font-size: 1.6rem;
    font-style: normal;
    font-weight: normal;
-   line-height: 1.875;
+   /* line-height: 1.875; */
+   line-height: 1.2;
    color: #656565;
    margin: 0;
    padding: 0;
